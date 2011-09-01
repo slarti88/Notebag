@@ -1,0 +1,7 @@
+.header-bar {
+    font-family: Helvetica;
+    font-size: 30px;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#667766), to(#669966));
+    color: #ffffff;
+    padding: 30px;
+}

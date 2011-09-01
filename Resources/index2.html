@@ -1,0 +1,29 @@
+<html>	
+	<head>
+		<link rel="stylesheet" type="text/css" href="jwysiwyg3/lib/blueprint/screen.css" media="screen, projection" />
+		<link rel="stylesheet" type="text/css" href="jwysiwyg3/lib/blueprint/print.css" media="print" />
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<!--[if lt IE 8]><link rel="stylesheet" href="../lib/blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+		<link rel="stylesheet" href="jwysiwyg3/jquery.wysiwyg.css" type="text/css"/>		
+		<script type="text/javascript" src="jwysiwyg3/lib/jquery1.5.js"></script>
+		<script type="text/javascript" src="jwysiwyg3/jquery.wysiwyg.js"></script>
+		<script type="text/javascript" src="jwysiwyg3/controls/wysiwyg.image.js"></script>
+		<script type="text/javascript" src="jwysiwyg3/controls/wysiwyg.link.js"></script>
+		<script type="text/javascript" src="jwysiwyg3/controls/wysiwyg.table.js"></script>
+		<script type="text/javascript">
+			(function($) {
+				$(document).ready(function() {
+					$('#wysiwyg').wysiwyg();
+				});
+			})(jQuery);
+		</script>        
+        <title>Notebag</title>
+	</head>	
+	<body style="background-color:#1c1c1c;margin:0">		
+		<div class="header-bar">
+			Notebag		
+		</div>
+    <!--<textarea style = "width:100%; height:100%" id=wysiwyg/></textarea> -->
+    <textarea id="wysiwyg" rows="5" cols="80"></textarea>
+	</body>
+</html>
