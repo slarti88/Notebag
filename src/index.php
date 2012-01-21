@@ -24,6 +24,6 @@ try {
 	echo $op;
 }
 catch (exception $e) {
-	echo $e->getMessage();
+	
 }			
 ?>
