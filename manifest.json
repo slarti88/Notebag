@@ -1,0 +1,15 @@
+{
+  "name": "Notebag",
+  "version": "1.0",
+  "description": "Turn your computer into one intelligent and faithful assistant",
+  "browser_action": {
+    "default_icon": "icon.png",
+     "name":"Open note"
+  },
+
+    "permissions": [
+        "tabs","http://*/*"
+      ],
+    "background_page":"src/background.html",
+   "manifest_version":2
+}
