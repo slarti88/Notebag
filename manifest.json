@@ -7,9 +7,9 @@
      "name":"Open note"
   },
 
-    "permissions": [
-        "tabs","http://*/*"
-      ],
-    "background_page":"src/background.html",
-   "manifest_version":2
+  "permissions": [
+        "tabs","http://*/*","https://*/*"
+  ],
+  "background_page":"src/background.html",
+  "manifest_version":2
 }

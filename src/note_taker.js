@@ -1,3 +1,5 @@
 var noteframe = document.createElement("iframe");
-noteframe.setAttribute("src","note.html");
+var note_url = chrome.extension.getURL("src/note.html");
+noteframe.setAttribute("style","z-index: 10002;position:fixed;width:270px;height:100%;top:0px;right:0px;bottom:0px");
+noteframe.setAttribute("src",note_url);
 document.body.appendChild(noteframe);
