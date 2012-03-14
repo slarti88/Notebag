@@ -1,17 +1,18 @@
 window.onload = onDocLoad;
 var tarea;
+var home_button;
 var addText;
 var pageUrl;
 
 var mDb;
 var indexedDB = window.webkitIndexedDB;
-var IDBTransaction = window.webkitIDBTransaction;
+var mIDBTransaction = window.webkitIDBTransaction||window.IDBTransaction;
 function onDocLoad(){
     tarea = document.getElementById("note_area");
+    home_button = document.getElementById("all_notes");
     tarea.onchange = onTextChanged;
-
-    pageUrl = window.location.href;
-
+    home_button.onclick= allNotes;
+    pageUrl = gURL;
     console.log("pageUrl " + pageUrl);
     var request = indexedDB.open("notebag_db");
     request.onsuccess = function (e){
@@ -31,8 +32,12 @@ function onTextChanged(){
     addToDB(tareatext);
 }
 
+function allNotes(){
+    window.open("all_notes.html");
+}
+
 function addToDB(text){
-    var trans = mDb.transaction(["notebag_store"],IDBTransaction.READ_WRITE,0);
+    var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
     var store = trans.objectStore("notebag_store");
     var request = store.put({"text":text,"pageUrl":pageUrl});
     request.onsuccess = function (e) {

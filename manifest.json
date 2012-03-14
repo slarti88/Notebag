@@ -4,11 +4,14 @@
   "description": "Turn your computer into one intelligent and faithful assistant",
   "browser_action": {
     "default_icon": "icon.png",
-     "name":"Open note"
+    "name":"Open note"
   },
-
+  "content_scripts":[{
+      "matches":["https://*/*","http://*/*","*://*/*"],
+      "js":["src/note_page.js"]
+  }],
   "permissions": [
-        "tabs","http://*/*","https://*/*"
+        "tabs","http://*/*","https://*/*","*://*/*"
   ],
   "background_page":"src/background.html",
   "manifest_version":2
