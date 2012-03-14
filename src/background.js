@@ -1,18 +1,20 @@
-chrome.browserAction.onClicked.addListener(function () {
+var gUrl;
+
+chrome.browserAction.onClicked.addListener(function (tab) {
     var notejs = chrome.extension.getURL("src/note_taker.js");
     chrome.tabs.executeScript(null,{file:"src/note_taker.js"});
+    console.log("tab id " + tab.id + " url " + tab.url);
+    gUrl = tab.url;
+    //chrome.tabs.sendRequest(tab.id,{"method":"loadNote"},function(response){
+    //    console.log(response);
+    //});
 });
 
-var gURL="about:blank"; //A default url just in case below code doesn't work
-chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){ //onUpdated should fire when the selected tab is changed or a link is clicked
-    chrome.tabs.getSelected(null,function(tab){
-        gURL=tab.url;
-    });
-});
-
-chrome.extension.onRequest.addListener(function chromeRequestListener(requestObj){
+chrome.extension.onRequest.addListener(function (requestObj,sender,sendResponse){
     var method = requestObj.method;
     if (method == "getUrl"){
-        console.log("url is " + requestObj.url);
+        console.log("getUrl ");
+        sendResponse({"url":gUrl});
     }
+
 });

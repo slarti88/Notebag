@@ -1,27 +1,30 @@
-window.onload = start;
+console.log("content_script called");
+var gURL = window.location.href;
+console.log("gUrl is " + gURL);
+
 var tarea;
 var home_button;
 var addText;
+var pageUrl;
 
 var mDb;
 var indexedDB = window.webkitIndexedDB;
 var mIDBTransaction = window.webkitIDBTransaction||window.IDBTransaction;
 
-function start(){
-    console.log("start");
-    chrome.extension.sendRequest({"method":"getUrl"},function(response){
-        pageUrl = response.url;
-        onDocLoad();
-    });
-}
-
-var xkcd = 1;
 function onDocLoad(){
-    console.log("note.js onDocLoad");
+    var noteframe = document.createElement("iframe");
+    var note_url = chrome.extension.getURL("src/note.html");
+    console.log("note_url " + note_url);
+    noteframe.setAttribute("style","z-index: 10002;position:fixed;width:270px;height:100%;top:0px;right:0px;bottom:0px");
+    noteframe.setAttribute("src",note_url);
+    noteframe.setAttribute("id","note_iframe");
+    document.body.appendChild(noteframe);
+
     tarea = document.getElementById("note_area");
     home_button = document.getElementById("all_notes");
     tarea.onchange = onTextChanged;
     home_button.onclick= allNotes;
+    pageUrl = gURL;
     console.log("pageUrl " + pageUrl);
     var request = indexedDB.open("notebag_db");
     request.onsuccess = function (e){

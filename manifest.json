@@ -6,10 +6,6 @@
     "default_icon": "icon.png",
     "name":"Open note"
   },
-  "content_scripts":[{
-      "matches":["https://*/*","http://*/*","*://*/*"],
-      "js":["src/note_page.js"]
-  }],
   "permissions": [
         "tabs","http://*/*","https://*/*","*://*/*"
   ],
