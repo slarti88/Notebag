@@ -7,7 +7,7 @@
     "name":"Open note"
   },
   "permissions": [
-        "tabs","http://*/*","https://*/*","*://*/*"
+        "tabs","http://*/*","https://*/*","file:///*/*"
   ],
   "background_page":"src/background.html",
   "manifest_version":2
