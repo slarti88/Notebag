@@ -34,9 +34,24 @@ html, body {
 
 #note-title {
     margin-top:20px;
+    margin-left:20px;
     text-align:center;
     font-size:20px;
     font-weight:bolder;
+    float:left;
+}
+
+#note-web-url{
+    border-radius:3px;
+    background-color:#494949;
+    text-decoration:none;
+    padding:8px;
+    margin-right:20px;
+    margin-top:12px;
+    float:right;
+    color:#ffffff;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 #note-list-title {
@@ -69,6 +84,10 @@ html, body {
     background-color:#494949;
     color:#ffffff;
     font-weight:bold;
+}
+
+#note-title-area{
+    height:50px;
 }
 
 #note-body{

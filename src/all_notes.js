@@ -18,9 +18,13 @@ gods_object["Lord of Light Rh'llor"] = "Hot Melisandre is alli can say";
 
 var note_object = new Object();
 var title_object = new Object();
-var current_title;
-var current_note;
+
+var current_note = new Object();
 function getAllNotes(){
+    var current_title;
+    var current_text;
+    var current_url;
+
     var request = indexedDB.open("notebag_db");
     request.onsuccess = function (e){
         mDb = e.target.result;
@@ -39,8 +43,13 @@ function getAllNotes(){
         cursorRequest.onsuccess = function (event){
             var cursor = event.target.result;
             if (!!cursor == false) {
+                current_note.title = current_title;
+                current_note.note = current_text;
+                current_note.url = current_url;
                 $("#note-title").text(current_title);
-                $("#note-body").text(note_object[current_title]);
+                $("#note-body").text(current_text);
+                $("#note-web-url").attr("href",current_url);
+                $("#note-web-url").attr("target","_blank");
                 // Specify certain css properties
                 $('li').addClass("note-list");
                 // Specify event handlers
@@ -57,10 +66,11 @@ function getAllNotes(){
                }
             }
             console.log("Url + text " + cursor.key + " - " + cursor.value.text + " : " + title);
-            note_object[title] = cursor.value.text;
+            note_object[title] = {"text":cursor.value.text,"url":cursor.key};
             title_object[cursor.key] = title;
-
             current_title = title;
+            current_text = cursor.value.text;
+            current_url = cursor.key;
             cursor.continue();
         }
     }
@@ -72,7 +82,6 @@ function popoulateNoteTitles(){
         htmlstring += "<li class='note-list'>" + title_object[key] + "</li>";
     }
     $("ul").html(htmlstring);
-
     $("li").click(showNote);
 }
 
@@ -89,5 +98,6 @@ function showNote(){
     $(".note-list-click").removeClass("note-list-click");
     $(this).addClass("note-list-click");
     $("#note-title").text($(this).text());
-    $("#note-body").text(note_object[$(this).text()])
+    $("#note-body").text(note_object[$(this).text()].text)
+    $("#note-web-url").attr("href",note_object[$(this).text()].url);
 }
