@@ -2,6 +2,7 @@ html, body {
     margin-top: 0;
     margin-left: 0;
     font-family: Helvetica, Arial, sans-serif;
+    @fontface "font-family: Droid Ser";
     height: 100%;
     width: 100%;
     padding: 0;
@@ -96,4 +97,64 @@ html, body {
     padding-right:20px;
     text-align:justify;
     font-size:16px;
+}
+
+#side-note-area {
+    width:100%;
+    height:90%;
+    box-sizing:border-box;
+    margin-top:0px;
+    margin-left:0px;
+    float:left;
+}
+
+#header-bar {
+   background-color:#494949;
+   font-weight:bold;
+   color:#ffffff;
+   height:40px;
+}
+
+#notebag-title {
+    float:left;
+    padding-top:10px;
+    padding-left:20px;
+}
+#note-nav-buttons{
+    float:right;
+    padding-right:15px;
+}
+.side-note-nav{
+    padding-left:5px;
+    padding-right:5px;
+    cursor:pointer;
+}
+
+#side-note-hide-btn {
+    padding-top:13px;
+}
+#side-note-web-btn {
+    padding-top:8px;
+}
+
+#side-note-show {
+    float:left;
+    width:100%;
+    height:100%;
+}
+
+#side-note-show-btn {
+    margin-top:10px;
+    margin-right:10px;
+}
+
+#side-note-hidden {
+    width:20%;
+    height:100%;
+    box-sizing:border-box;
+    margin-top:0px;
+    margin-left:0px;
+    float:right;
+    display:none;
+    background-color:#494949;
 }

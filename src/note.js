@@ -16,8 +16,28 @@ function start(){
 }
 
 function onDocLoad(){
-    $("#note_area").change(onTextChanged);
+    $("#side-note-text-area").change(onTextChanged);
     $("#all_notes").click(allNotes);
+    $("#side-note-hide-btn").hover(function(){
+        $(this).attr("src","../res/note-hide-hover.png");
+    });
+
+    $("#side-note-hide-btn").mouseout(function(){
+        $(this).attr("src","../res/note-hide.png");
+    });
+
+    $("#side-note-hide-btn").click(hideBar);
+
+    $("#side-note-web-btn").click(allNotes);
+
+    $("#side-note-web-btn").mouseover(function(){
+        $(this).attr("src","../res/note-link-hover.png");
+    });
+
+    $("#side-note-web-btn").mouseout(function(){
+        $(this).attr("src","../res/note-link.png");
+    });
+
     var request = indexedDB.open("notebag_db");
     request.onsuccess = function (e){
         mDb = e.target.result;
@@ -51,7 +71,7 @@ function onDocLoad(){
 }
 
 function onTextChanged(){
-    var tareatext = $("#note_area").val();
+    var tareatext = $(this).val();
     console.log("onTextChanged " + tareatext);
     addToDB(tareatext);
 }
@@ -60,7 +80,23 @@ function allNotes(){
     window.open("all_notes.html");
 }
 
+function hideBar(){
+    $('#side-note-show').hide();
+    $('#side-note-hidden').show();
+    $('#side-note-show-btn').mouseover(function(){
+        $(this).attr("src","../res/note-show-hover.png");
+    });
+    $('#side-note-show-btn').mouseout(function(){
+        $(this).attr("src","../res/note-show.png");
+    });
+    $('#side-note-show-btn').click(function() {
+        $('#side-note-show').show();
+        $('#side-note-hidden').hide();
+    });
+}
+
 function addToDB(text){
+    console.log("AddtoDb");
     var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
     var store = trans.objectStore("notebag_store");
     var title =String(text).split("\n",1);
@@ -70,5 +106,6 @@ function addToDB(text){
     }
     var request = store.put({"text":text,"pageUrl":pageUrl,"title":title});
     request.onsuccess = function (e) {
+        console.log("pageurl " + pageUrl + " added");
     };
 }

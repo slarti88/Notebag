@@ -5,9 +5,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript(null,{file:"src/note_taker.js"});
     console.log("tab id " + tab.id + " url " + tab.url);
     gUrl = tab.url;
-    //chrome.tabs.sendRequest(tab.id,{"method":"loadNote"},function(response){
-    //    console.log(response);
-    //});
 });
 
 chrome.extension.onRequest.addListener(function (requestObj,sender,sendResponse){
