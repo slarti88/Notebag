@@ -9,6 +9,5 @@
   "permissions": [
         "tabs","http://*/*","https://*/*","file:///*/*"
   ],
-  "background_page":"src/background.html",
-  "manifest_version":2
+  "background_page":"src/background.html"
 }

@@ -57,9 +57,9 @@ function onDocLoad(){
                 if (!!cursor == false){
                     return;
                 }
-                else{
+                else{                    
                     notestring = cursor.text;
-                    $("#note_area").text(notestring)
+                    $("#side-note-text-area").text(notestring)
                 }
             };
         }
