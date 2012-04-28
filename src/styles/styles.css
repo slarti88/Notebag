@@ -46,6 +46,15 @@ html, body {
 
 #note-web-url{
     border-radius:3px;
+    text-decoration:none;
+    color:gray;
+    margin-left:20px;
+    margin-top:12px;
+    cursor:pointer;
+}
+
+#note-delete-link{
+    border-radius:3px;
     background-color:#494949;
     text-decoration:none;
     padding:8px;
@@ -56,6 +65,109 @@ html, body {
     font-weight:bold;
     cursor:pointer;
 }
+
+
+
+#note-list-title {
+    margin-top:20px;
+    margin-left:20px;
+    font-size:20px;
+    font-weight:bolder;
+
+}
+
+#note-list {
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    padding-bottom:10px;
+}
+
+.note-list {
+    margin-top:10px;
+    padding-left:20px;
+    padding-top:5px;
+    padding-bottom:5px;
+    list-style:none;
+    font-size:16px;
+    font-weight:normal
+}
+.note-list:hover {
+    cursor:pointer;
+    background-color:#494949;
+    color:#ffffff;
+}
+.note-list-click {
+    background-color:#494949;
+    color:#ffffff;
+    font-weight:bold;
+}
+
+#note-title-area{
+    height:50px;
+}
+
+#note-body{
+    padding-top:15px;
+    padding-left:20px;
+    padding-right:20px;
+    text-align:justify;
+    font-size:16px;
+}
+
+#side-note-area {
+    width:100%;
+    height:90%;
+    box-sizing:border-box;
+    margin-top:0px;
+    margin-left:0px;
+    float:left;
+}
+
+#header-bar {
+   background-color:#494949;
+   font-weight:bold;
+   color:#ffffff;
+   height:40px;
+}
+
+#notebag-title {
+    float:left;
+    padding-top:10px;
+    padding-left:20px;
+}
+#note-nav-buttons{
+    float:right;
+    padding-right:15px;
+}
+.side-note-nav{
+    padding-left:5px;
+    padding-right:5px;
+    cursor:pointer;
+}
+
+#side-note-hide-btn {
+    padding-top:13px;
+}
+#side-note-web-note-we
+    cursor:pointer;
+}
+
+#note-delete-link{
+    border-radius:3px;
+    background-color:#494949;
+    text-decoration:none;
+    padding:8px;
+    margin-right:20px;
+    margin-top:12px;
+    float:right;
+    color:#ffffff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
 
 #note-list-title {
     margin-top:20px;

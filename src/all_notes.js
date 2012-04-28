@@ -20,6 +20,7 @@ var note_object = new Object();
 var title_object = new Object();
 
 var current_note = new Object();
+
 function getAllNotes(){
     var current_title;
     var current_text;
@@ -50,6 +51,8 @@ function getAllNotes(){
                 $("#note-body").text(current_text);
                 $("#note-web-url").attr("href",current_url);
                 $("#note-web-url").attr("target","_blank");
+
+                $("#note-delete-link").click(deleteNote);
                 // Specify certain css properties
                 $('li').addClass("note-list");
                 // Specify event handlers
@@ -85,6 +88,12 @@ function popoulateNoteTitles(){
     $("li").click(showNote);
 }
 
+function deleteNote(){
+    var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
+    var store = trans.objectStore("notebag_store");
+    var request_del = store.delete(current_note.url);url;  
+}
+
 function docReady(){
     indexedDB = window.webkitIndexedDB;
     mIDBTransaction = window.webkitIDBTransaction||window.IDBTransaction;
@@ -100,4 +109,9 @@ function showNote(){
     $("#note-title").text($(this).text());
     $("#note-body").text(note_object[$(this).text()].text)
     $("#note-web-url").attr("href",note_object[$(this).text()].url);
+    var link_text = note_object[$(this).text()].url;   
+    $("#note-web-url").text(link_text.substr(0,75));
+    current_note.title = $(this).text();
+    current_note.text = note_object[$(this).text()].text;
+    current_note.url = note_object[$(this).text()].url;    
 }
