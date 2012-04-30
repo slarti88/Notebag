@@ -20,12 +20,15 @@ var note_object = new Object();
 var title_object = new Object();
 
 var current_note = new Object();
+var listIndex = 0;
+var listArray;
 
 function getAllNotes(){
     var current_title;
     var current_text;
     var current_url;
-
+    listArray = {};
+    
     var request = indexedDB.open("notebag_db");
     request.onsuccess = function (e){
         mDb = e.target.result;
@@ -38,7 +41,7 @@ function getAllNotes(){
         }
         var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
         var store = trans.objectStore("notebag_store");
-
+	
         var keyRange = IDBKeyRange.lowerBound(0);
         var cursorRequest = store.openCursor(keyRange);
         cursorRequest.onsuccess = function (event){
@@ -56,10 +59,11 @@ function getAllNotes(){
                 // Specify certain css properties
                 $('li').addClass("note-list");
                 // Specify event handlers
-                $('li').click(showNote);
-                popoulateNoteTitles();
+                $('li').click(onListItemClicked);
+                populateNoteTitles();
                 return;
             }
+            
             var title = cursor.value.title;
             if (title == undefined){
                title =String(cursor.value.text).split("\n",1);
@@ -68,30 +72,41 @@ function getAllNotes(){
                    title = String(title).split(" ",6).join(" ");
                }
             }
-            console.log("Url + text " + cursor.key + " - " + cursor.value.text + " : " + title);
             note_object[title] = {"text":cursor.value.text,"url":cursor.key};
             title_object[cursor.key] = title;
             current_title = title;
             current_text = cursor.value.text;
             current_url = cursor.key;
-            cursor.continue();
+            cursor.continue();            
         }
     }
 }
 
-function popoulateNoteTitles(){
-    htmlstring = "";
+function populateNoteTitles(){
+    htmlstring = "";    
     for (var key in title_object){
-        htmlstring += "<li class='note-list'>" + title_object[key] + "</li>";
+        htmlstring += "<li class='note-list' " + "id=listitem" + listIndex +  " >" + title_object[key] + "</li>";
+        listArray[key] = listIndex;
+        listIndex++;    
+        console.log("listindex " + listIndex);
     }
     $("ul").html(htmlstring);
-    $("li").click(showNote);
+    $("li").click(onListItemClicked);    
+    showNote(0);
+}
+
+function onListItemClicked(){
+    var index = $('li').index($(this));
+    showNote(index);
 }
 
 function deleteNote(){
     var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
     var store = trans.objectStore("notebag_store");
-    var request_del = store.delete(current_note.url);url;  
+    var request_del = store.delete(current_note.url);  
+    $("#listitem" + [listArray[current_note.url]]).remove();
+    showNote(0);
+   
 }
 
 function docReady(){
@@ -103,15 +118,16 @@ function docReady(){
     getAllNotes();
 }
 
-function showNote(){
+function showNote(lIndex){
+    var itemstr = "#listitem" + lIndex;    
     $(".note-list-click").removeClass("note-list-click");
-    $(this).addClass("note-list-click");
-    $("#note-title").text($(this).text());
-    $("#note-body").text(note_object[$(this).text()].text)
-    $("#note-web-url").attr("href",note_object[$(this).text()].url);
-    var link_text = note_object[$(this).text()].url;   
+    $(itemstr).addClass("note-list-click");
+    $("#note-title").text($(itemstr).text());
+    $("#note-body").text(note_object[$(itemstr).text()].text)
+    $("#note-web-url").attr("href",note_object[$(itemstr).text()].url);
+    var link_text = note_object[$(itemstr).text()].url;   
     $("#note-web-url").text(link_text.substr(0,75));
-    current_note.title = $(this).text();
-    current_note.text = note_object[$(this).text()].text;
-    current_note.url = note_object[$(this).text()].url;    
+    current_note.title = $(itemstr).text();
+    current_note.text = note_object[$(itemstr).text()].text;
+    current_note.url = note_object[$(itemstr).text()].url;        
 }
