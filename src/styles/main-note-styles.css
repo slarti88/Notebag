@@ -3,7 +3,7 @@ html, body {
     margin-left: 0;
     font-family: Helvetica, Arial, sans-serif;
     @fontface "font-family: Droid Ser";
-    height: 100%;
+    height: 90%;
     width: 100%;
     padding: 0;
     margin:  0;
@@ -13,8 +13,8 @@ html, body {
     margin-left:20%;
     margin-top:5%;
     width:60%;
-    height:75%;
-    box-shadow: 0px 0px 10px #333333;
+    height:100%;
+    box-shadow: 0px 0px 10px #333333;    
 }
 
 #left-pane {
@@ -33,6 +33,7 @@ html, body {
     width:70%;
     height:100%;
     float:right;
+    overflow:auto;
 }
 
 #note-title {
@@ -114,15 +115,6 @@ html, body {
     font-size:16px;
 }
 
-#side-note-area {
-    width:100%;
-    height:90%;
-    box-sizing:border-box;
-    margin-top:0px;
-    margin-left:0px;
-    float:left;
-}
-
 #header-bar {
    background-color:#494949;
    font-weight:bold;
@@ -148,7 +140,7 @@ html, body {
 #side-note-hide-btn {
     padding-top:13px;
 }
-#side-note-web-note-we
+#side-note-web {
     cursor:pointer;
 }
 
@@ -164,8 +156,6 @@ html, body {
     font-weight:bold;
     cursor:pointer;
 }
-
-
 
 #note-list-title {
     margin-top:20px;
@@ -215,15 +205,6 @@ html, body {
     font-size:16px;
 }
 
-#side-note-area {
-    width:100%;
-    height:90%;
-    box-sizing:border-box;
-    margin-top:0px;
-    margin-left:0px;
-    float:left;
-}
-
 #header-bar {
    background-color:#494949;
    font-weight:bold;
@@ -239,38 +220,4 @@ html, body {
 #note-nav-buttons{
     float:right;
     padding-right:15px;
-}
-.side-note-nav{
-    padding-left:5px;
-    padding-right:5px;
-    cursor:pointer;
-}
-
-#side-note-hide-btn {
-    padding-top:13px;
-}
-#side-note-web-btn {
-    padding-top:8px;
-}
-
-#side-note-show {
-    float:left;
-    width:100%;
-    height:100%;
-}
-
-#side-note-show-btn {
-    margin-top:10px;
-    margin-right:10px;
-}
-
-#side-note-hidden {
-    width:20%;
-    height:100%;
-    box-sizing:border-box;
-    margin-top:0px;
-    margin-left:0px;
-    float:right;
-    display:none;
-    background-color:#494949;
 }

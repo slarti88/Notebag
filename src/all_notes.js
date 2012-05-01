@@ -66,8 +66,8 @@ function getAllNotes(){
             
             var title = cursor.value.title;
             if (title == undefined){
-               title =String(cursor.value.text).split("\n",1);
-               title =String(cursor.value.text).split(".",1);
+               title = String(cursor.value.text).split("\n",1);
+               title = String(cursor.value.text).split(".",1);
                if (String(title).split(" ").length > 6){
                    title = String(title).split(" ",6).join(" ");
                }
@@ -105,8 +105,7 @@ function deleteNote(){
     var store = trans.objectStore("notebag_store");
     var request_del = store.delete(current_note.url);  
     $("#listitem" + [listArray[current_note.url]]).remove();
-    showNote(0);
-   
+    showNote(0);   
 }
 
 function docReady(){
@@ -120,10 +119,14 @@ function docReady(){
 
 function showNote(lIndex){
     var itemstr = "#listitem" + lIndex;    
+    var bodystr = note_object[$(itemstr).text()].text;
+    bodystr = "<p>" + bodystr;
+    bodystr = bodystr.replace(/\n/g,"</p><p>");
+    bodystr += "</p>";
     $(".note-list-click").removeClass("note-list-click");
     $(itemstr).addClass("note-list-click");
     $("#note-title").text($(itemstr).text());
-    $("#note-body").text(note_object[$(itemstr).text()].text)
+    $("#note-body").html(bodystr);
     $("#note-web-url").attr("href",note_object[$(itemstr).text()].url);
     var link_text = note_object[$(itemstr).text()].url;   
     $("#note-web-url").text(link_text.substr(0,75));
