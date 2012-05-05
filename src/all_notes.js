@@ -5,23 +5,14 @@ var mIDBTransaction;
 var IDBKeyRange;
 var mDb;
 
-/*
-var gods_object = {};
-gods_object["The Seven Gods"] = "The seven gods were worshipped by the Andals, who came from the free cities.\
-                        Jorah Mormont and Cately Tully were among such people. The seven gods were, the smith, the crone,\
-                        the mother, the father, the maiden, the warrior and the stranger, who is also considered one of the many faces of the god \
-                        worshipped by the faceless assassins of Braavos";
-
-gods_object["The Drowned God"] = "Krakens worship them gods only know why.";
-gods_object["Lord of Light Rh'llor"] = "Hot Melisandre is alli can say";
-*/
-
 var note_object = new Object();
 var title_object = new Object();
 
 var current_note = new Object();
 var listIndex = 0;
 var listArray;
+
+var noteData = null;
 
 function getAllNotes(){
     var current_title;
@@ -56,6 +47,8 @@ function getAllNotes(){
                 $("#note-web-url").attr("target","_blank");
 
                 $("#note-delete-link").click(deleteNote);
+                // Set the note saving listener
+                $("#note-save-link").click(saveNotes);
                 // Specify certain css properties
                 $('li').addClass("note-list");
                 // Specify event handlers
@@ -79,7 +72,36 @@ function getAllNotes(){
             current_url = cursor.key;
             cursor.continue();            
         }
-    }
+    }    
+    
+}
+
+function saveNotes(){
+    var requestFileSystem = window.requestFileSystem||window.webkitRequestFileSystem;
+    requestFileSystem(window.TEMPORARY,1024*1024*5/*5MB*/,onInitFs,onFsError);
+}
+
+function onInitFs(fs){
+    fs.root.getFile("notebag_data.json",{create:true},function (fileEntry){
+        fileEntry.createWriter(function (fileWriter){
+            fileWriter.onwriteend = function (e){
+                console.log("Write complete");
+            };
+            fileWriter.onerror = function (e){
+                console.log("Unable to write");
+            };
+            var BlobBuilder = BlobBuilder||window.WebKitBlobBuilder;
+            var bb = new BlobBuilder();
+            bb.append(JSON.stringify(note_object));
+            fileWriter.write(bb.getBlob('text/plain'));
+            var furl = fileEntry.toURL();
+            window.open(furl);
+        },onFsError);
+    },onFsError);    
+}
+
+function onFsError(e){
+    console.log("onInitFsError");
 }
 
 function populateNoteTitles(){
@@ -87,12 +109,11 @@ function populateNoteTitles(){
     for (var key in title_object){
         htmlstring += "<li class='note-list' " + "id=listitem" + listIndex +  " >" + title_object[key] + "</li>";
         listArray[key] = listIndex;
-        listIndex++;    
-        console.log("listindex " + listIndex);
+        listIndex++;            
     }
     $("ul").html(htmlstring);
     $("li").click(onListItemClicked);    
-    showNote(0);
+    showNote(0);    
 }
 
 function onListItemClicked(){
