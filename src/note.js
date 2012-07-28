@@ -104,7 +104,7 @@ function addToDB(text){
     if (String(title).split(" ").length > 6){
         title = String(title).split(" ",6).join(" ");
     }
-    var request = store.put({"text":text,"pageUrl":pageUrl,"title":title});
+    var request = store.put({"text":text,"pageUrl":pageUrl,"title":title,"modified_at":(new Date()).getTime()});
     request.onsuccess = function (e) {
         console.log("pageurl " + pageUrl + " added");
     };

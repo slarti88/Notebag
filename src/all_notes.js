@@ -1,5 +1,4 @@
 $(document).ready(docReady);
-
 var indexedDB;
 var mIDBTransaction;
 var IDBKeyRange;
@@ -65,7 +64,7 @@ function getAllNotes(){
                    title = String(title).split(" ",6).join(" ");
                }
             }
-            note_object[title] = {"text":cursor.value.text,"url":cursor.key};
+            note_object[title] = {"text":cursor.value.text,"url":cursor.key,"modified_at":cursor.value.modified_at};
             title_object[cursor.key] = title;
             current_title = title;
             current_text = cursor.value.text;
@@ -122,7 +121,7 @@ function onListItemClicked(){
 }
 
 function deleteNote(){
-    var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
+    var trans = mDb.transaction(["notebag_store"],saction.READ_WRITE);
     var store = trans.objectStore("notebag_store");
     var request_del = store.delete(current_note.url);  
     $("#listitem" + [listArray[current_note.url]]).remove();
@@ -154,4 +153,5 @@ function showNote(lIndex){
     current_note.title = $(itemstr).text();
     current_note.text = note_object[$(itemstr).text()].text;
     current_note.url = note_object[$(itemstr).text()].url;        
+    console.log("time " + note_object[$(itemstr).text()].modified_at);
 }

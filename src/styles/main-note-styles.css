@@ -162,7 +162,6 @@ html, body {
     margin-left:20px;
     font-size:20px;
     font-weight:bolder;
-
 }
 
 #note-list {
@@ -223,13 +222,14 @@ html, body {
 }
 
 #note-save-link {
-    float:right;
-    border-radius:3px;
-    background-color:#494949;
-    text-decoration:none;
-    padding:5px;
-    float:right;
-    font-size:small;
-    color:#ffffff;    
-    cursor:pointer;
+    float:right;  
+    padding-top:2px;
+    padding-bottom:10px;    
+    cursor:pointer;            
+}
+
+#note-search-link {
+    float:right;    
+    padding-bottom:20px;        
+    cursor:pointer;            
 }
