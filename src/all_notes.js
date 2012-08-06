@@ -48,11 +48,14 @@ function getAllNotes(){
                 $("#note-delete-link").click(deleteNote);
                 // Set the note saving listener
                 $("#note-save-link").click(saveNotes);
+                // Set search notes listener
+                $("#note-search-link").click(toggleSearch);
                 // Specify certain css properties
                 $('li').addClass("note-list");
                 // Specify event handlers
                 $('li').click(onListItemClicked);
-                populateNoteTitles();
+                $("#note-search-box").hide();
+                populateNoteTitles(title_object);
                 return;
             }
             
@@ -73,6 +76,30 @@ function getAllNotes(){
         }
     }    
     
+}
+
+function toggleSearch(){
+    $("#note-search-box").show();
+    $("#note-search-box").keyup(onSearchTextChange);
+    console.log("searchNotes");
+}
+
+function onSearchTextChange() {
+    var searchText = $(this).val();    
+    searchNotes(searchText);
+}
+
+function searchNotes(text){
+    var noteMatches = {};
+    for (var key in title_object) {
+        var subject = title_object[key];  
+        var pattern = new RegExp(text,"gi");
+        var match = String(subject).match(pattern);        
+        if (match != null) {                
+            noteMatches[key] = title_object[key];
+        }
+    }    
+    populateNoteTitles(noteMatches);
 }
 
 function saveNotes(){
@@ -103,15 +130,17 @@ function onFsError(e){
     console.log("onInitFsError");
 }
 
-function populateNoteTitles(){
+function populateNoteTitles(title_array){
     htmlstring = "";    
-    for (var key in title_object){
-        htmlstring += "<li class='note-list' " + "id=listitem" + listIndex +  " >" + title_object[key] + "</li>";
+    listIndex = 0;
+    for (var key in title_array){
+        htmlstring += "<li class='note-list' " + "id=listitem" + listIndex +  " >" + title_array[key] + "</li>";
         listArray[key] = listIndex;
         listIndex++;            
     }
     $("ul").html(htmlstring);
-    $("li").click(onListItemClicked);    
+    $("li").click(onListItemClicked);
+
     showNote(0);    
 }
 
@@ -138,7 +167,7 @@ function docReady(){
 }
 
 function showNote(lIndex){
-    var itemstr = "#listitem" + lIndex;    
+    var itemstr = "#listitem" + lIndex;        
     var bodystr = note_object[$(itemstr).text()].text;
     bodystr = "<p>" + bodystr;
     bodystr = bodystr.replace(/\n/g,"</p><p>");
@@ -153,5 +182,5 @@ function showNote(lIndex){
     current_note.title = $(itemstr).text();
     current_note.text = note_object[$(itemstr).text()].text;
     current_note.url = note_object[$(itemstr).text()].url;        
-    console.log("time " + note_object[$(itemstr).text()].modified_at);
+   // console.log("time " + note_object[$(itemstr).text()].modified_at);
 }
