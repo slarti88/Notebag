@@ -92,11 +92,17 @@ function onSearchTextChange() {
 function searchNotes(text){
     var noteMatches = {};
     for (var key in title_object) {
-        var subject = title_object[key];  
+        var subject = title_object[key];          
         var pattern = new RegExp(text,"gi");
         var match = String(subject).match(pattern);        
         if (match != null) {                
             noteMatches[key] = title_object[key];
+        } else {
+            subject = note_object[title_object[key]].text;
+            match = String(subject).match(pattern);            
+            if (match != null) {                
+                noteMatches[key] = title_object[key];
+            }
         }
     }    
     populateNoteTitles(noteMatches);
@@ -141,7 +147,9 @@ function populateNoteTitles(title_array){
     $("ul").html(htmlstring);
     $("li").click(onListItemClicked);
 
-    showNote(0);    
+    if (listIndex > 0){
+        showNote(0);    
+    }
 }
 
 function onListItemClicked(){
@@ -166,7 +174,7 @@ function docReady(){
     getAllNotes();
 }
 
-function showNote(lIndex){
+function showNote(lIndex){    
     var itemstr = "#listitem" + lIndex;        
     var bodystr = note_object[$(itemstr).text()].text;
     bodystr = "<p>" + bodystr;
@@ -184,3 +192,5 @@ function showNote(lIndex){
     current_note.url = note_object[$(itemstr).text()].url;        
    // console.log("time " + note_object[$(itemstr).text()].modified_at);
 }
+
+

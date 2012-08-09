@@ -7,8 +7,11 @@ var mDb;
 var indexedDB = window.webkitIndexedDB;
 var IDBKeyRange = window.webkitIDBKeyRange;
 var mIDBTransaction = window.webkitIDBTransaction||window.IDBTransaction;
+var gChrome;
 
-function start(){
+var firstTime = true;
+
+function start(){    
     chrome.extension.sendRequest({"method":"getUrl"},function(response){
         pageUrl = response.url;
         onDocLoad();
@@ -59,7 +62,8 @@ function onDocLoad(){
                 }
                 else{                    
                     notestring = cursor.text;
-                    $("#side-note-text-area").text(notestring)
+                    $("#side-note-text-area").text(notestring);
+                    firstTime = false;                    
                 }
             };
         }
@@ -100,12 +104,21 @@ function addToDB(text){
     var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
     var store = trans.objectStore("notebag_store");
     var title =String(text).split("\n",1);
-    var title =String(title).split(".",1);
+    title =String(title).split(".",1);
     if (String(title).split(" ").length > 6){
         title = String(title).split(" ",6).join(" ");
     }
     var request = store.put({"text":text,"pageUrl":pageUrl,"title":title,"modified_at":(new Date()).getTime()});
     request.onsuccess = function (e) {
-        console.log("pageurl " + pageUrl + " added");
+        console.log("pageurl " + pageUrl + " added");        
+        if (firstTime) {
+            addToBookmarks(title,pageUrl);
+        }
     };
+}
+
+function addToBookmarks(titlevar, urlvar) {
+    chrome.extension.sendMessage({"id":"bookmark","head":titlevar,"url":urlvar}, function (response) {
+        console.log("created");
+    });    
 }
