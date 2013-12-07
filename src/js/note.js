@@ -1,4 +1,10 @@
+// This is the script invoked by note.html which is the side bar. This listens to the events 
+// like addition of text to textarea and closing of the sidebar
+
+
 $(document).ready(start);
+
+
 var tarea;
 var home_button;
 var addText;
@@ -41,37 +47,19 @@ function onDocLoad(){
         $(this).attr("src","../res/note-link.png");
     });
 
-    var request = indexedDB.open("notebag_db");
-    request.onsuccess = function (e){
-        mDb = e.target.result;
-        var v = "1.0";
-        if (v != mDb.version){
-            var setVRequest = mDb.setVersion(v);
-            setVRequest.onsuccess = function(e){
-                var store = mDb.createObjectStore("notebag_store",{keyPath:"pageUrl"});
-            }
-        }
-        else{
-            var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
-            var store = trans.objectStore("notebag_store");
-            var cursorRequest = store.get(pageUrl);
-            cursorRequest.onsuccess = function (event){
-                var cursor = event.target.result;
-                if (!!cursor == false){
-                    return;
-                }
-                else{                    
-                    notestring = cursor.text;
-                    $("#side-note-text-area").text(notestring);
-                    firstTime = false;                    
-                }
-            };
-        }
+    console.log("PageUrl " + pageUrl);
 
-    };
-    request.onerror = function(e){
+    chrome.storage.local.get(pageUrl,function(item) {
+        
+        for (val in item){
+            console.log("val " + item[val]);
 
-    };
+            var noteObject = item[val];
+            notestring = noteObject.text;
+            console.log("noteobject title " + noteObject.title);
+            $("#side-note-text-area").text(notestring);        
+        }
+    });
 }
 
 function onTextChanged(){
@@ -99,22 +87,27 @@ function hideBar(){
     });
 }
 
+
+// This function is when we want ot add the text in the text area to the liocal storage
 function addToDB(text){
     console.log("AddtoDb");
-    var trans = mDb.transaction(["notebag_store"],mIDBTransaction.READ_WRITE);
-    var store = trans.objectStore("notebag_store");
+    
     var title =String(text).split("\n",1);
     title =String(title).split(".",1);
     if (String(title).split(" ").length > 6){
         title = String(title).split(" ",6).join(" ");
     }
-    var request = store.put({"text":text,"pageUrl":pageUrl,"title":title,"modified_at":(new Date()).getTime()});
-    request.onsuccess = function (e) {
+
+    var noteObject = {"text":text,"title":title,"modified_at":(new Date()).getTime()};
+    var storeObject = {};
+    storeObject[pageUrl] = noteObject;
+
+    chrome.storage.local.set(storeObject,function () {
         console.log("pageurl " + pageUrl + " added");        
         if (firstTime) {
             addToBookmarks(title,pageUrl);
         }
-    };
+    });
 }
 
 function addToBookmarks(titlevar, urlvar) {

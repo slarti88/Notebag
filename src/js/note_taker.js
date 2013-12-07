@@ -1,3 +1,5 @@
+// This script is executed when the browser action is clicked and open the note.html page and attach it to the existing DOM
+
 var pageUrl;
 var noteframe = document.getElementById("note_iframe");
 if (noteframe == null) {

@@ -1,13 +1,42 @@
 {
   "name": "Notebag",
   "version": "1.0",
+  "manifest_version": 2,
   "description": "Turn your computer into one intelligent and faithful assistant",
   "browser_action": {
     "default_icon": "icon.png",
     "name":"Open note"
   },
   "permissions": [
-        "tabs","http://*/*","https://*/*","file:///*/*","bookmarks"
+        "tabs",
+        "http://*/*",
+        "https://*/*",
+        "file:///*/*",
+        "bookmarks",
+        "storage"
   ],
-  "background_page":"src/background.html"
+  "background":{
+    "page" : "src/background.html"
+  },
+  "web_accessible_resources" : [
+      "src/note.html",
+      "src/js/note.js",
+      "src/js/note_taker.js",
+      "src/js/note_page.js",
+      "src/js/all_notes.js",
+      "src/all_notes.html",
+      "src/js/background.js",
+      "src/styles/main-note-styles.css",
+      "src/styles/styles.css",
+      "res/link-web.png",
+      "res/icon.png",
+      "res/note-hide-hover.png",
+      "res/note-hide.png",
+      "res/note-link.png",
+      "res/note-show-hover.png",
+      "res/note-show.png",
+      "res/note-save.png",
+      "res/note-search.png"
+  ]
 }
+  
