@@ -9,10 +9,6 @@ var tarea;
 var home_button;
 var addText;
 
-var mDb;
-var indexedDB = window.webkitIndexedDB;
-var IDBKeyRange = window.webkitIDBKeyRange;
-var mIDBTransaction = window.webkitIDBTransaction||window.IDBTransaction;
 var gChrome;
 
 var firstTime = true;
